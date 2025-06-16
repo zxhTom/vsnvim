@@ -112,6 +112,7 @@ require("plugins/init")
 require("aftoptions")
 ' > ~/.config/${nvimname}/init.lua
 # NVIM_APPNAME=nvim${version} /path/to/new_nvim/bin/nvim
+mkdir -p ${DIR}/.bins
 cp ${DIR}/nvimtemplate ${DIR}/.bins/${nvimname}
 sed -i 's/\(NVIM_APPNAME\)=".*"/\1="'"${nvimname}"'"/g' ${DIR}/.bins/${nvimname}
 sed -i 's@\(VIMRUNTIME\)=".*"@\1="'"${nvim_root}"'/share/nvim/runtime"@g' ${DIR}/.bins/${nvimname}
