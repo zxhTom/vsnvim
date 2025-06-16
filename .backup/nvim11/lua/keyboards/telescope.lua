@@ -1,4 +1,8 @@
 local telescope = require('telescope')
+-- 加载扩展
+pcall(telescope.load_extension, "fzf")
+pcall(telescope.load_extension, "ui-select")
+pcall(telescope.load_extension, "project")
 -- 设置快捷键
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
@@ -12,13 +16,3 @@ vim.keymap.set("n", "<leader>fs", function()
   builtin.grep_string({ search = vim.fn.input("Grep > ") })
 end, { desc = "Grep string" })
 vim.keymap.set("n", "<leader>fp", ":Telescope project<CR>", { desc = "Projects" })
-
-
--- 测试键位
-vim.keymap.set("n", "<leader>ts", function()
-  vim.ui.select(
-    { "Apple", "Banana", "Cherry" },
-    { prompt = "选择水果:" },
-    function(choice) print("选择了: " .. (choice or "无")) end
-  )
-end)

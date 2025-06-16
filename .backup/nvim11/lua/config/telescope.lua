@@ -71,20 +71,18 @@ telescope.setup({
     },
     project = {
       base_dirs = {
+        { path = "~/zxh/project", max_depth = 3 }, -- 扫描 ~/code，最大深度 3
         { path = "~/temp/github", max_depth = 2 },
       },
     },
-    ["ui-select"] = {
-      -- 可选的 Telescope 配置（如主题、布局等）
-      require("telescope.themes").get_dropdown({
-        previewer = false,
-        layout_config = { width = 0.5 },
-      }),
+    extensions = {
+      ["ui-select"] = {
+        -- 可选的 Telescope 配置（如主题、布局等）
+        require("telescope.themes").get_dropdown({
+          previewer = false,
+          layout_config = { width = 0.5 },
+        }),
+      },
     },
   },
 })
-
--- 加载扩展
-pcall(telescope.load_extension, "fzf")
-pcall(telescope.load_extension, "ui-select")
-pcall(telescope.load_extension, "project")
