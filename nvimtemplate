@@ -1,0 +1,12 @@
+#!/bin/zsh
+# 功能：专供 VS Code 使用的 Neovim 启动器，支持 NVIM_APPNAME
+# 用法：在 VS Code 设置中指定此脚本路径
+
+# 你的自定义配置目录名称（例如 nvim11）
+export NVIM_APPNAME="nvim11"
+
+# 真正的 Neovim 二进制路径（根据你的实际路径修改）
+# NVIM_BIN="/Users/zxhtom/temp/nvim/vsnvim/nvim-macos-arm64/bin/nvim"         # Linux
+
+# 启动 Neovim
+exec "$NVIM_BIN" "$@"
