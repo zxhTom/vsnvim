@@ -27,11 +27,11 @@ if [[ ! -f ${HOME}/.zxhtom/neovimprofile ]]
 then
   touch ${HOME}/.zxhtom/neovimprofile
 fi
-cat ${HOME}/.zxhtom/neovimprofile | grep 'alias '"${nvimname}"'="NVIM_APPNAME='"${nvimname}"' '"${nvim_path}"''
+cat ${HOME}/.zxhtom/neovimprofile | grep 'alias '"${nvimname}"'="NVIM_APPNAME='"${nvimname}"' VIMRUNTIME='"${nvim_root}"'/share/nvim/runtime '"${nvim_path}"'"'
 if [[ $? -eq 1 ]]
 then
   echo "not exist , i will add neovim to path"
-  echo "alias ${nvimname}=\"NVIM_APPNAME=${nvimname} ${nvim_path}\"">>~/.zxhtom/neovimprofile
+  echo "alias ${nvimname}=\"NVIM_APPNAME=${nvimname} VIMRUNTIME=${nvim_root}/share/nvim/runtime ${nvim_path}\"">>~/.zxhtom/neovimprofile
 fi
 # 配置目录
 mkdir -p ~/.config/${nvimname}/lua/plugins
@@ -47,7 +47,7 @@ vim.g.mapleader = " "
 EOF
 cat > ~/.config/${nvimname}/lua/aftoptions.lua <<EOF
 -- 限制运行时路径
-vim.opt.rtp:append('/Users/zxhtom/.vscode/extensions/asvetliakov.vscode-neovim-1.18.22/runtime/')
+vim.opt.rtp:append('${HOME}/.vscode/extensions/asvetliakov.vscode-neovim-1.18.22/runtime/')
 EOF
 cat > ~/.config/${nvimname}/lua/plugins/setup/telescope.lua <<EOF
 return function()
@@ -114,5 +114,6 @@ require("aftoptions")
 # NVIM_APPNAME=nvim${version} /path/to/new_nvim/bin/nvim
 cp ${DIR}/nvimtemplate ${DIR}/.bins/${nvimname}
 sed -i 's/\(NVIM_APPNAME\)=".*"/\1="'"${nvimname}"'"/g' ${DIR}/.bins/${nvimname}
+sed -i 's@\(VIMRUNTIME\)=".*"@\1="'"${nvim_root}"'/share/nvim/runtime"@g' ${DIR}/.bins/${nvimname}
 sed -i 's@.*\(NVIM_BIN\)=.*@\1="'"${nvim_path}"'"@g' ${DIR}/.bins/${nvimname}
 ln -sf ${DIR}/.bins/${nvimname} ~/.local/bin/${nvimname}
