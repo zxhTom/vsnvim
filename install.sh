@@ -49,13 +49,31 @@ cat > ~/.config/${nvimname}/lua/aftoptions.lua <<EOF
 -- 限制运行时路径
 vim.opt.rtp:append('${HOME}/.vscode/extensions/asvetliakov.vscode-neovim-1.18.22/runtime/')
 EOF
-cat > ~/.config/${nvimname}/lua/plugins/setup/telescope.lua <<EOF
+cat > ~/.config/${nvimname}/lua/setup/telescope.lua <<EOF
 return function()
   -- 确保依赖工具已安装
   if vim.fn.executable('rg') == 0 then
     vim.notify('请先安装 ripgrep (brew install ripgrep)', vim.log.levels.WARN)
   end
 end
+EOF
+cat > ~/.config/${nvimname}/lua/plugins/telescope.lua <<EOF
+return {
+  'nvim-telescope/telescope.nvim',
+  tag = '0.1.8',
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "BurntSushi/ripgrep",
+    "sharkdp/fd",
+    "nvim-telescope/telescope-ui-select.nvim",
+    "nvim-telescope/telescope-project.nvim",
+    "nvim-telescope/telescope-fzf-native.nvim" -- 可选：高性能排序
+  },
+  config = function()
+    require('utils.import').all('telescope')
+  end
+}
 EOF
 cat > ~/.config/${nvimname}/lua/keyboards/telescope.lua <<EOF
 local builtin = require('telescope.builtin')
@@ -72,7 +90,7 @@ telescope.setup({
   }
 })
 EOF
-cat > ~/.config/${nvimname}/lua/plugins/init.lua <<EOF
+cat > ~/.config/${nvimname}/lua/manager/init.lua <<EOF
 -- 设置插件路径
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -89,26 +107,44 @@ vim.opt.rtp:prepend(lazypath)
 
 -- 安装插件列表
 require("lazy").setup({
-  {
-    'nvim-telescope/telescope.nvim', 
-    tag = '0.1.8',
-    dependencies = { 
-      'nvim-lua/plenary.nvim', 
-      'nvim-telescope/telescope-fzf-native.nvim' -- 可选：高性能排序
+ spec = {
+    {
+      import = "plugins"
     },
-    config = function()
-      require('plugins.setup.telescope')()  -- 先检查依赖
-      require('config.telescope')          -- 再加载配置
-      require('keyboards.telescope')          -- 再加载配置
-    end
-  }
+  },
+  install = {
+    colorscheme = {
+      "kanagawa"
+    }
+  },
+  checker = {
+    enabled = true,
+  } 
 })
+EOF
+cat > ~/.config/${nvimname}/lua/utils/import.lua <<EOF
+  local M ={}
+  M.setup = function(module)
+    require("setup."..module)
+  end
+  M.keyboards = function(module)
+    require("keyboards."..module)
+  end
+  M.config = function(module)
+    require("config."..module)
+  end
+  M.all = function(module)
+    M.setup(module)
+    M.config(module)
+    M.keyboards(module)
+  end
+  return M
 EOF
 # 示例：创建一个最小化配置
 echo '
 require("options")
 -- ~/.config/'"${nvimname}"'/init.lua
-require("plugins/init")
+require("manager/init")
 require("aftoptions")
 ' > ~/.config/${nvimname}/init.lua
 # NVIM_APPNAME=nvim${version} /path/to/new_nvim/bin/nvim

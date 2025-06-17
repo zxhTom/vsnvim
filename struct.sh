@@ -23,11 +23,13 @@ mkdir -p ${HOME}/.config/${nvimname}/lua/core
 mkdir -p ${HOME}/.config/${nvimname}/lua/plugins
 mkdir -p ${HOME}/.config/${nvimname}/lua/config
 mkdir -p ${HOME}/.config/${nvimname}/lua/keyboards
+mkdir -p ${HOME}/.config/${nvimname}/lua/setup
+mkdir -p ${HOME}/.config/${nvimname}/lua/manager
+mkdir -p ${HOME}/.config/${nvimname}/lua/utils
 
 touch ${HOME}/.config/${nvimname}/lua/core/{options,autocmds,keymaps}.lua
-touch ${HOME}/.config/${nvimname}/lua/plugins/init.lua
+touch ${HOME}/.config/${nvimname}/lua/utils/import.lua
 
-mkdir -p ${HOME}/.config/${nvimname}/lua/plugins/setup
 
 # example:
 # nvim_default/
