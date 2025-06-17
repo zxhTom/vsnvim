@@ -6,4 +6,4 @@ then
 fi
 nvimname=$1
 target=$2
-cp -rvf  ${DIR}/.backup/${nvimname}/* ${HOME}/.config/${target}/lua
+cp -rvf  ${DIR}/.backup/${nvimname}/* ${HOME}/.config/${target}/
