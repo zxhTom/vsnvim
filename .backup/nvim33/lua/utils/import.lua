@@ -11,6 +11,5 @@ end
 M.all = function(module)
   M.setup(module)
   M.config(module)
-  M.keyboards(module)
 end
 return M
