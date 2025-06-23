@@ -6,5 +6,5 @@ then
 fi
 nvimname=$1
 target=$2
-mkdir -p ${DIR}/.backup/${nvimname}
+mkdir -p ${DIR}/.backup/${target}
 cp -rvf ${HOME}/.config/${nvimname}/lua ${DIR}/.backup/${target}
