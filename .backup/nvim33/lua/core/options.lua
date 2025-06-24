@@ -3,7 +3,7 @@ local os = require'utils.system'.get_os()
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = " "
-if os == 'windows' or os == 'linux' then
+if os == 'windows' then
   vim.opt.clipboard='unamed'
 else
   vim.opt.clipboard='unnamedplus'

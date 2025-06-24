@@ -89,7 +89,6 @@ telescope.setup({
     file_ignore_patterns = { "node_modules" }
   }
 })
-vim.keymap.set('n', '<leader>fl', builtin.spell_suggest, { desc = 'Spell Suggestion' })
 EOF
 cat > ~/.config/${nvimname}/lua/manager/init.lua <<EOF
 -- 设置插件路径
