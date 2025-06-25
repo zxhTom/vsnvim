@@ -125,13 +125,13 @@ EOF
 cat > ~/.config/${nvimname}/lua/utils/import.lua <<EOF
   local M ={}
   M.setup = function(module)
-    require("setup."..module)
+    pcall(require,"setup."..module)
   end
   M.keyboards = function(module)
-    require("keyboards."..module)
+    pcall(require,"keyboards."..module)
   end
   M.config = function(module)
-    require("config."..module)
+    pcall(require,"config."..module)
   end
   M.all = function(module)
     M.setup(module)
